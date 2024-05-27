@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.util.StringUtils;
 import javax.servlet.FilterChain;
-
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -68,7 +69,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 userDetails, null,
                 userDetails == null ?
                         Arrays.asList() : userDetails.getAuthorities()
+
         );
+
 
 
         authentication.setDetails(
@@ -78,5 +81,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
 
+
+        System.out.println("Authorities: " + authentication);
     }
 }

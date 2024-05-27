@@ -8,6 +8,7 @@ import com.example.oms.studentproject.Serviceimpl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -87,10 +88,13 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
 
                       httpSecurity.authorizeRequests()
 
-                                  .antMatchers(HttpMethod.POST,"/api/**").permitAll()
+                              .antMatchers(HttpMethod.GET, "/api/findById/**").hasAuthority("STUDENT_ACTIVE")
+                              // .antMatchers(HttpMethod.GET,"api/findById/**").hasRole("STUDENT_ACTIVE")
+
+                              .antMatchers(HttpMethod.POST,"/api/**").permitAll()
                                    .antMatchers("/api/login/**").permitAll()
 
-                                  .anyRequest().authenticated();
+                              .anyRequest().authenticated();
 
                       httpSecurity.addFilterBefore(jwtTokenFilter,UsernamePasswordAuthenticationFilter.class);
 

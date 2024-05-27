@@ -30,10 +30,12 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if (student.getIsActive().equals("1")) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT_ACTIVE"));
+        boolean v = student.getIsActive();
+
+        if (v) {
+            authorities.add(new SimpleGrantedAuthority("STUDENT_ACTIVE"));
         } else {
-            authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT_INACTIVE"));
+            authorities.add(new SimpleGrantedAuthority("STUDENT_INACTIVE"));
         }
 
         return authorities;
